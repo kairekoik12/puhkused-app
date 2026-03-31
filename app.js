@@ -128,6 +128,10 @@ async function initApp() {
   const storeMonthSel = document.getElementById('store-month-select');
   if (storeMonthSel) storeMonthSel.value = new Date().getMonth();
 
+  // Set managers month to current month
+  const mgrMonthSel = document.getElementById('mgr-month-select');
+  if (mgrMonthSel) mgrMonthSel.value = new Date().getMonth();
+
   renderCurrentView();
 }
 
@@ -1065,7 +1069,6 @@ function confirmDeleteVacation(vacId) {
 // MANAGERS VIEW
 // ============================================================
 function renderManagers() {
-  // Find all managers (juhataja in position or name contains "mj" suffix in original data)
   const managers = employees.filter(e =>
     e.position && (e.position.toLowerCase().includes('juhataja'))
   );
@@ -1085,76 +1088,85 @@ function renderManagers() {
     return si - sj;
   });
 
-  const todayStr = new Date().toISOString().split('T')[0];
-  let html = '<div class="managers-grid">';
+  const year = 2026;
+  const mgrMonthSel = document.getElementById('mgr-month-select');
+  const month = mgrMonthSel ? parseInt(mgrMonthSel.value) : new Date().getMonth();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
+
+  // Calendar grid — same style as store view
+  let html = '<div class="store-calendar-wrapper"><table class="store-cal-table"><thead><tr>';
+  html += '<th class="name-col">Juhataja</th>';
+  html += '<th class="balance-col">Kauplus</th>';
+  html += '<th class="balance-col">Jääk</th>';
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const dow = (new Date(year, month, d).getDay() + 6) % 7;
+    const isWeekend = dow >= 5;
+    const isToday = dateStr === todayStr;
+    html += `<th class="day-col ${isWeekend ? 'weekend' : ''} ${isToday ? 'today-col' : ''}">
+      <div class="day-num">${d}</div>
+      <div class="day-name">${DAY_NAMES_ET[dow]}</div>
+    </th>`;
+  }
+  html += '</tr></thead><tbody>';
 
   managers.forEach(mgr => {
     const storeInfo = getStoreInfo(mgr.store);
     const mgrVacs = vacations.filter(v => v.employee_id === mgr.id);
+    const remaining = calcRemainingBalance(mgr);
+    const remClass = remaining < 0 ? 'balance-neg' : remaining < 5 ? 'balance-warn' : 'balance-ok';
 
-    // Calc both balances
-    const savedMode = showEndOfPeriodBalance;
-    showEndOfPeriodBalance = false;
-    const todayBalance = calcRemainingBalance(mgr);
-    showEndOfPeriodBalance = true;
-    const endBalance = calcRemainingBalance(mgr);
-    showEndOfPeriodBalance = savedMode;
+    html += '<tr>';
+    html += `<td class="name-cell" style="cursor:pointer;" onclick="showEmployeeDetail(${mgr.id})">
+      <div><strong>${escHtml(mgr.name)}</strong></div>
+    </td>`;
+    html += `<td class="balance-cell"><span class="store-badge ${storeInfo.cssClass}" style="font-size:0.65rem;padding:2px 6px;">${escHtml(mgr.store)}</span></td>`;
+    html += `<td class="balance-cell"><span class="${remClass}">${remaining}</span></td>`;
 
-    const todayClass = todayBalance < 0 ? 'balance-neg' : todayBalance < 5 ? 'balance-warn' : 'balance-ok';
-    const endClass = endBalance < 0 ? 'balance-neg' : endBalance < 5 ? 'balance-warn' : 'balance-ok';
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const dow = (new Date(year, month, d).getDay() + 6) % 7;
+      const isWeekend = dow >= 5;
+      const isToday = dateStr === todayStr;
 
-    const currentVac = mgrVacs.find(v => v.start_date <= todayStr && v.end_date >= todayStr);
-    const nextVac = mgrVacs.filter(v => v.start_date > todayStr).sort((a, b) => a.start_date.localeCompare(b.start_date))[0];
+      const vacOnDay = mgrVacs.find(v => v.start_date <= dateStr && v.end_date >= dateStr);
 
-    html += `<div class="manager-card">
-      <div class="manager-header">
-        <div class="emp-avatar-lg" style="font-size:1.2rem;width:48px;height:48px;">${mgr.name.charAt(0)}</div>
-        <div>
-          <h3 style="font-size:var(--text-base);font-weight:600;margin-bottom:2px;">${escHtml(mgr.name)}</h3>
-          <span class="store-badge ${storeInfo.cssClass}">${escHtml(mgr.store)}</span>
-        </div>
-      </div>`;
+      let cellClass = isWeekend ? 'weekend' : '';
+      if (isToday) cellClass += ' today-cell';
+      let cellContent = '';
 
-    if (currentVac) {
-      html += `<div class="manager-status on-vacation">
-        <span class="status-dot"></span> Puhkusel: ${formatDate(currentVac.start_date)} – ${formatDate(currentVac.end_date)}
-      </div>`;
-    } else {
-      html += `<div class="manager-status at-work">
-        <span class="status-dot"></span> Tööl
-      </div>`;
+      if (vacOnDay) {
+        const typeNorm = (vacOnDay.type || 'PP').toUpperCase().replace('PÕHIPUHKUS', 'PP');
+        cellClass += typeNorm === 'LPP' ? ' vac-lpp' : ' vac-pp';
+        cellContent = typeNorm;
+      }
+
+      html += `<td class="cal-day ${cellClass}">${cellContent}</td>`;
     }
 
-    html += `<div class="manager-balance">
-      <div><span class="b-label">Jääk täna</span> <span class="${todayClass}" style="font-weight:600;">${todayBalance} p</span></div>
-      <div><span class="b-label">Aasta lõpus</span> <span class="${endClass}" style="font-weight:600;">${endBalance} p</span></div>
-    </div>`;
-
-    if (nextVac && !currentVac) {
-      html += `<div class="manager-next-vac">
-        Järgmine: ${formatDate(nextVac.start_date)} – ${formatDate(nextVac.end_date)} (${nextVac.days || daysBetween(nextVac.start_date, nextVac.end_date)} p)
-      </div>`;
-    }
-
-    if (mgrVacs.length > 0) {
-      html += '<div class="manager-vacs"><div class="b-label" style="margin-bottom:6px;">Puhkused 2026</div>';
-      [...mgrVacs].sort((a, b) => a.start_date.localeCompare(b.start_date)).forEach(v => {
-        const typeNorm = (v.type || 'PP').toUpperCase().replace('PÕHIPUHKUS', 'PP');
-        const typeClass = typeNorm === 'LPP' ? 'lpp' : 'pp';
-        const isPast = v.end_date < todayStr;
-        html += `<div class="manager-vac-row ${isPast ? 'past' : ''}">
-          <span class="vac-type-badge ${typeClass}" style="font-size:0.6rem;">${typeNorm}</span>
-          ${formatDate(v.start_date)} – ${formatDate(v.end_date)}
-          <span style="color:var(--color-text-muted);">(${v.days || daysBetween(v.start_date, v.end_date)} p)</span>
-        </div>`;
-      });
-      html += '</div>';
-    }
-
-    html += '</div>';
+    html += '</tr>';
   });
 
-  html += '</div>';
+  // Summary row: count how many managers on vacation each day
+  html += '<tr class="mgr-summary-row"><td class="name-cell"><strong>Kokku puhkusel</strong></td><td></td><td></td>';
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const dow = (new Date(year, month, d).getDay() + 6) % 7;
+    const isWeekend = dow >= 5;
+    let count = 0;
+    managers.forEach(mgr => {
+      const mgrVacs = vacations.filter(v => v.employee_id === mgr.id);
+      if (mgrVacs.some(v => v.start_date <= dateStr && v.end_date >= dateStr)) count++;
+    });
+    const warnClass = count >= 2 ? 'overlap-warn' : count === 1 ? 'overlap-one' : '';
+    html += `<td class="cal-day summary-cell ${isWeekend ? 'weekend' : ''} ${warnClass}">${count || ''}</td>`;
+  }
+  html += '</tr>';
+
+  html += '</tbody></table></div>';
   document.getElementById('managers-body').innerHTML = html;
 }
 

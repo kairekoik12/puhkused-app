@@ -282,7 +282,23 @@
         <div class="page-header">
           <div>
             <h2>Juhatajad</h2>
-            <div class="subtitle">Kaupluste juhatajad ja nende puhkused</div>
+            <div class="subtitle">Kaupluste juhatajate puhkuste kalender — kattuvused punasena</div>
+          </div>
+          <div class="store-selector" style="display:flex;gap:8px;align-items:center;">
+            <select id="mgr-month-select" onchange="renderManagers()">
+              <option value="0">Jaanuar</option>
+              <option value="1">Veebruar</option>
+              <option value="2">Märts</option>
+              <option value="3">Aprill</option>
+              <option value="4">Mai</option>
+              <option value="5">Juuni</option>
+              <option value="6">Juuli</option>
+              <option value="7">August</option>
+              <option value="8">September</option>
+              <option value="9">Oktoober</option>
+              <option value="10">November</option>
+              <option value="11">Detsember</option>
+            </select>
           </div>
         </div>
         <div class="card">

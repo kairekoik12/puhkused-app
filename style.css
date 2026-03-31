@@ -1669,6 +1669,45 @@ body {
   text-decoration: line-through;
 }
 
+/* ============================================================
+   MANAGERS CALENDAR — OVERLAP & SUMMARY
+   ============================================================ */
+.mgr-summary-row td {
+  border-top: 2px solid var(--color-border);
+  font-weight: 700;
+  font-size: var(--text-sm);
+}
+
+.mgr-summary-row td.name-cell {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.summary-cell {
+  text-align: center;
+}
+
+.overlap-warn {
+  background: rgba(220, 38, 38, 0.25) !important;
+  color: #b91c1c !important;
+  font-weight: 700;
+}
+
+.overlap-one {
+  background: rgba(37, 99, 235, 0.12) !important;
+  color: var(--color-primary) !important;
+}
+
+[data-theme="dark"] .overlap-warn {
+  background: rgba(248, 113, 113, 0.2) !important;
+  color: #fca5a5 !important;
+}
+
+[data-theme="dark"] .overlap-one {
+  background: rgba(96, 165, 250, 0.15) !important;
+  color: #93c5fd !important;
+}
+
 /* Calendar clickable cells */
 .day-cell.clickable {
   cursor: pointer;
