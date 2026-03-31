@@ -472,7 +472,53 @@ function renderWeeklyView() {
   });
 
   html += '</tbody></table>';
+
+  // === Upcoming weeks preview tables ===
+  html += buildUpcomingWeekTable(currentWeekStart, 1, 'Järgmisel nädalal puhkusel');
+  html += buildUpcomingWeekTable(currentWeekStart, 2, 'Ülejärgmisel nädalal puhkusel');
+
   document.getElementById('weekly-body').innerHTML = html;
+}
+
+function buildUpcomingWeekTable(baseWeekStart, weeksAhead, title) {
+  const futureStart = new Date(baseWeekStart.getTime() + weeksAhead * 7 * 24 * 60 * 60 * 1000);
+  const futureEnd = new Date(futureStart);
+  futureEnd.setDate(futureEnd.getDate() + 6);
+
+  const fStart = futureStart.toISOString().split('T')[0];
+  const fEnd = futureEnd.toISOString().split('T')[0];
+  const weekNum = getWeekNumber(futureStart);
+
+  const futureVacs = vacations.filter(v => dateRangesOverlap(v.start_date, v.end_date, fStart, fEnd));
+
+  let html = `<div class="upcoming-week-section">`;
+  html += `<div class="upcoming-week-header">${title} <span class="upcoming-week-date">${formatDateShort(futureStart)} – ${formatDateShort(futureEnd)} (Nädal ${weekNum})</span></div>`;
+
+  if (futureVacs.length === 0) {
+    html += `<div class="upcoming-empty">Keegi pole puhkusel</div>`;
+  } else {
+    futureVacs.sort((a, b) => {
+      const si = STORES.findIndex(s => s.name === a.store);
+      const sj = STORES.findIndex(s => s.name === b.store);
+      if (si !== sj) return si - sj;
+      return (a.employee_name || '').localeCompare(b.employee_name || '');
+    });
+
+    html += `<table class="upcoming-table"><thead><tr><th>Nimi</th><th>Kauplus</th><th>Periood</th><th>Päevi</th></tr></thead><tbody>`;
+    futureVacs.forEach(v => {
+      const storeInfo = getStoreInfo(v.store);
+      const days = v.days || daysBetween(v.start_date, v.end_date);
+      html += `<tr>
+        <td>${escHtml(v.employee_name)}</td>
+        <td><span class="store-badge ${storeInfo.cssClass}">${escHtml(v.store)}</span></td>
+        <td>${formatDate(v.start_date)} – ${formatDate(v.end_date)}</td>
+        <td>${days}</td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+  }
+  html += '</div>';
+  return html;
 }
 
 function getWeekNumber(d) {
