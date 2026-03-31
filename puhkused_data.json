@@ -1,0 +1,1300 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "Johannes Haravee",
+      "position": "Kaupluse juhataja",
+      "store": "Järve",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 0.23,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 28.23
+    },
+    {
+      "id": 2,
+      "name": "Hendri Naarits",
+      "position": "Müügikonsultant",
+      "store": "Järve",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 0.38,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 28.38
+    },
+    {
+      "id": 3,
+      "name": "Kevin Allik",
+      "position": "Müügikonsultant",
+      "store": "Järve",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 0.75,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 28.75
+    },
+    {
+      "id": 4,
+      "name": "Kristen-Jaan Kenzap",
+      "position": "Müügikonsultant",
+      "store": "Järve",
+      "contract_date": "Alates 11.07.25",
+      "balance_start_2025": 13.35,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 41.35
+    },
+    {
+      "id": 5,
+      "name": "Ilja Anikin",
+      "position": "Müügikonsultant",
+      "store": "Järve",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 6.14,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 34.14
+    },
+    {
+      "id": 6,
+      "name": "Marlon Inno",
+      "position": "Müügikonsultant",
+      "store": "Järve",
+      "contract_date": "Alates 13.10.25",
+      "balance_start_2025": 0.55,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 28.55
+    },
+    {
+      "id": 7,
+      "name": "Tarvo Moisar",
+      "position": "Kaupluse juhataja",
+      "store": "Kristiine",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 6.19,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 34.19
+    },
+    {
+      "id": 8,
+      "name": "Brant Leon Vihman",
+      "position": "Müügiekspert",
+      "store": "Kristiine",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 3.55,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 31.55
+    },
+    {
+      "id": 9,
+      "name": "Janeli Tiirmaa",
+      "position": "Müügiekspert",
+      "store": "Kristiine",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 5.93,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 33.93
+    },
+    {
+      "id": 10,
+      "name": "Randel Vinkler",
+      "position": "Müügiekspert",
+      "store": "Kristiine",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 4.63,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 32.63
+    },
+    {
+      "id": 11,
+      "name": "Jaan Kalbin",
+      "position": "Müügikonsultant",
+      "store": "Kristiine",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 10.47,
+      "balance_year_2026": 35.0,
+      "balance_end_2026": 45.47
+    },
+    {
+      "id": 12,
+      "name": "Danel Adra",
+      "position": "Müügikonsultant",
+      "store": "Kristiine",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 0.8,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 28.8
+    },
+    {
+      "id": 13,
+      "name": "Erki Peet",
+      "position": "Müügiekspert",
+      "store": "Kristiine",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 0.57,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 28.57
+    },
+    {
+      "id": 14,
+      "name": "Natalja Pantelejeva",
+      "position": "Kaupluse juhataja",
+      "store": "Mustakivi",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 3.33,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 31.33
+    },
+    {
+      "id": 15,
+      "name": "Maksim Larin",
+      "position": "Müügiekspert",
+      "store": "Mustakivi",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 1.0,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 29.0
+    },
+    {
+      "id": 16,
+      "name": "Deniss Ivanov",
+      "position": "Müügiekspert",
+      "store": "Mustakivi",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 2.42,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 30.42
+    },
+    {
+      "id": 17,
+      "name": "Vlada Garanovitš",
+      "position": "Müügikonsultant",
+      "store": "Mustakivi",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 5.85,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 33.85
+    },
+    {
+      "id": 18,
+      "name": "Pavel Burmistrov",
+      "position": "Müügikonsultant",
+      "store": "Mustakivi",
+      "contract_date": "Alates 10.09.25",
+      "balance_start_2025": 8.67,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 36.67
+    },
+    {
+      "id": 19,
+      "name": "Danila Ivanov",
+      "position": "Müügikonsultant",
+      "store": "Mustakivi",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 4.72,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 32.72
+    },
+    {
+      "id": 20,
+      "name": "Jaanus Kustassoo",
+      "position": "Kaupluse juhataja",
+      "store": "Rocca",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": -0.01,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 27.99
+    },
+    {
+      "id": 21,
+      "name": "Egle Suislepp",
+      "position": "Müügikonsultant",
+      "store": "Rocca",
+      "contract_date": "Alates 01.08.25",
+      "balance_start_2025": 11.74,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 39.74
+    },
+    {
+      "id": 22,
+      "name": "Etta Laura Örd",
+      "position": "Müügikonsultant",
+      "store": "Rocca",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 1.38,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 29.38
+    },
+    {
+      "id": 23,
+      "name": "Kalmer Lepasalu",
+      "position": "Müügikonsultant",
+      "store": "Rocca",
+      "contract_date": "Alates 06.10.25",
+      "balance_start_2025": 6.67,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 34.67
+    },
+    {
+      "id": 24,
+      "name": "Marten Allmets",
+      "position": "Müügikonsultant",
+      "store": "Rocca",
+      "contract_date": "Alates 17.02.26",
+      "balance_start_2025": 0,
+      "balance_year_2026": 24.35,
+      "balance_end_2026": 24.35
+    },
+    {
+      "id": 25,
+      "name": "Hendrik Tamm",
+      "position": "Kaupluse juhataja",
+      "store": "Viru",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 0.12,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 28.12
+    },
+    {
+      "id": 26,
+      "name": "Rasmus Visnapuu",
+      "position": "Müügiekspert",
+      "store": "Viru",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 0.56,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 28.56
+    },
+    {
+      "id": 27,
+      "name": "Rainer Õun",
+      "position": "Müügikonsultat",
+      "store": "Viru",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 0.7,
+      "balance_year_2026": 35.0,
+      "balance_end_2026": 35.7
+    },
+    {
+      "id": 28,
+      "name": "Markus Kesa",
+      "position": "Müügikonsultant",
+      "store": "Viru",
+      "contract_date": "alates 06.02.26",
+      "balance_start_2025": 0,
+      "balance_year_2026": 25.22,
+      "balance_end_2026": 25.22
+    },
+    {
+      "id": 29,
+      "name": "Riivo Seemre",
+      "position": "Kaupluse juhataja",
+      "store": "Ülemiste",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 0.39,
+      "balance_year_2026": 35.0,
+      "balance_end_2026": 35.39
+    },
+    {
+      "id": 30,
+      "name": "Andri Mets",
+      "position": "Müügiekspert",
+      "store": "Ülemiste",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 3.21,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 31.21
+    },
+    {
+      "id": 31,
+      "name": "Kristjan Reiners",
+      "position": "Müügikonsultant",
+      "store": "Ülemiste",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 2.02,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 30.02
+    },
+    {
+      "id": 32,
+      "name": "Otto-Edvard Rästas",
+      "position": "Müügikonsultant",
+      "store": "Ülemiste",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 2.08,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 30.08
+    },
+    {
+      "id": 33,
+      "name": "Kevin Pihlak",
+      "position": "Müügikonsultant",
+      "store": "Ülemiste",
+      "contract_date": "Enne 1.07.25",
+      "balance_start_2025": 16.57,
+      "balance_year_2026": 28.0,
+      "balance_end_2026": 44.57
+    },
+    {
+      "id": 34,
+      "name": "Kaur-Mattias Tern",
+      "position": "Müügikonsultant",
+      "store": "Ülemiste",
+      "contract_date": "Alates 29.12.26",
+      "balance_start_2025": 0.23,
+      "balance_year_2026": 31.5,
+      "balance_end_2026": 31.73
+    }
+  ],
+  "vacations": [
+    {
+      "employee_id": 1,
+      "employee_name": "Johannes Haravee",
+      "store": "Järve",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-04-01",
+      "end_date": "2026-04-09"
+    },
+    {
+      "employee_id": 1,
+      "employee_name": "Johannes Haravee",
+      "store": "Järve",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-08-03",
+      "end_date": "2026-08-16"
+    },
+    {
+      "employee_id": 1,
+      "employee_name": "Johannes Haravee",
+      "store": "Järve",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-11-02",
+      "end_date": "2026-11-08"
+    },
+    {
+      "employee_id": 2,
+      "employee_name": "Hendri Naarits",
+      "store": "Järve",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-02-02",
+      "end_date": "2026-02-08"
+    },
+    {
+      "employee_id": 2,
+      "employee_name": "Hendri Naarits",
+      "store": "Järve",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-05-18",
+      "end_date": "2026-06-01"
+    },
+    {
+      "employee_id": 2,
+      "employee_name": "Hendri Naarits",
+      "store": "Järve",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-09-14",
+      "end_date": "2026-09-20"
+    },
+    {
+      "employee_id": 3,
+      "employee_name": "Kevin Allik",
+      "store": "Järve",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-03-23",
+      "end_date": "2026-03-29"
+    },
+    {
+      "employee_id": 3,
+      "employee_name": "Kevin Allik",
+      "store": "Järve",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-06-15",
+      "end_date": "2026-06-30"
+    },
+    {
+      "employee_id": 3,
+      "employee_name": "Kevin Allik",
+      "store": "Järve",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-10-12",
+      "end_date": "2026-10-18"
+    },
+    {
+      "employee_id": 4,
+      "employee_name": "Kristen-Jaan Kenzap",
+      "store": "Järve",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-02-16",
+      "end_date": "2026-02-22"
+    },
+    {
+      "employee_id": 4,
+      "employee_name": "Kristen-Jaan Kenzap",
+      "store": "Järve",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-04-20",
+      "end_date": "2026-04-26"
+    },
+    {
+      "employee_id": 4,
+      "employee_name": "Kristen-Jaan Kenzap",
+      "store": "Järve",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-07-20",
+      "end_date": "2026-08-02"
+    },
+    {
+      "employee_id": 4,
+      "employee_name": "Kristen-Jaan Kenzap",
+      "store": "Järve",
+      "type": "PP",
+      "days": 13,
+      "start_date": "2026-09-21",
+      "end_date": "2026-10-03"
+    },
+    {
+      "employee_id": 5,
+      "employee_name": "Ilja Anikin",
+      "store": "Järve",
+      "type": "PP",
+      "days": 10,
+      "start_date": "2026-04-27",
+      "end_date": "2026-05-07"
+    },
+    {
+      "employee_id": 5,
+      "employee_name": "Ilja Anikin",
+      "store": "Järve",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-06-01",
+      "end_date": "2026-06-14"
+    },
+    {
+      "employee_id": 5,
+      "employee_name": "Ilja Anikin",
+      "store": "Järve",
+      "type": "PP",
+      "days": 10,
+      "start_date": "2026-10-19",
+      "end_date": "2026-10-28"
+    },
+    {
+      "employee_id": 6,
+      "employee_name": "Marlon Inno",
+      "store": "Järve",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-02-09",
+      "end_date": "2026-02-15"
+    },
+    {
+      "employee_id": 6,
+      "employee_name": "Marlon Inno",
+      "store": "Järve",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-07-01",
+      "end_date": "2026-07-14"
+    },
+    {
+      "employee_id": 6,
+      "employee_name": "Marlon Inno",
+      "store": "Järve",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-11-09",
+      "end_date": "2026-11-15"
+    },
+    {
+      "employee_id": 7,
+      "employee_name": "Tarvo Moisar",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-01-26",
+      "end_date": "2026-02-01"
+    },
+    {
+      "employee_id": 7,
+      "employee_name": "Tarvo Moisar",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-04-27",
+      "end_date": "2026-05-11"
+    },
+    {
+      "employee_id": 7,
+      "employee_name": "Tarvo Moisar",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 12,
+      "start_date": "2026-06-15",
+      "end_date": "2026-06-28"
+    },
+    {
+      "employee_id": 8,
+      "employee_name": "Brant Leon Vihman",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-01-12",
+      "end_date": "2026-01-18"
+    },
+    {
+      "employee_id": 8,
+      "employee_name": "Brant Leon Vihman",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-06-29",
+      "end_date": "2026-07-05"
+    },
+    {
+      "employee_id": 8,
+      "employee_name": "Brant Leon Vihman",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-09-21",
+      "end_date": "2026-10-04"
+    },
+    {
+      "employee_id": 9,
+      "employee_name": "Janeli Tiirmaa",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-03-23",
+      "end_date": "2026-03-29"
+    },
+    {
+      "employee_id": 9,
+      "employee_name": "Janeli Tiirmaa",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-05-25",
+      "end_date": "2026-06-07"
+    },
+    {
+      "employee_id": 9,
+      "employee_name": "Janeli Tiirmaa",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-10-12",
+      "end_date": "2026-10-18"
+    },
+    {
+      "employee_id": 10,
+      "employee_name": "Randel Vinkler",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-03-30",
+      "end_date": "2026-04-07"
+    },
+    {
+      "employee_id": 10,
+      "employee_name": "Randel Vinkler",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-05-18",
+      "end_date": "2026-05-25"
+    },
+    {
+      "employee_id": 10,
+      "employee_name": "Randel Vinkler",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-07-06",
+      "end_date": "2026-07-19"
+    },
+    {
+      "employee_id": 11,
+      "employee_name": "Jaan Kalbin",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-05-11",
+      "end_date": "2026-05-17"
+    },
+    {
+      "employee_id": 11,
+      "employee_name": "Jaan Kalbin",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-07-27",
+      "end_date": "2026-08-02"
+    },
+    {
+      "employee_id": 11,
+      "employee_name": "Jaan Kalbin",
+      "store": "Kristiine",
+      "type": "LPP",
+      "days": 7,
+      "start_date": "2026-08-03",
+      "end_date": "2026-08-09"
+    },
+    {
+      "employee_id": 11,
+      "employee_name": "Jaan Kalbin",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-11-16",
+      "end_date": "2026-11-29"
+    },
+    {
+      "employee_id": 12,
+      "employee_name": "Danel Adra",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-02-09",
+      "end_date": "2026-02-15"
+    },
+    {
+      "employee_id": 12,
+      "employee_name": "Danel Adra",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-08-03",
+      "end_date": "2026-08-16"
+    },
+    {
+      "employee_id": 12,
+      "employee_name": "Danel Adra",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-11-02",
+      "end_date": "2026-11-08"
+    },
+    {
+      "employee_id": 13,
+      "employee_name": "Erki Peet",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-04-13",
+      "end_date": "2026-04-26"
+    },
+    {
+      "employee_id": 13,
+      "employee_name": "Erki Peet",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-07-20",
+      "end_date": "2026-07-26"
+    },
+    {
+      "employee_id": 13,
+      "employee_name": "Erki Peet",
+      "store": "Kristiine",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-10-26",
+      "end_date": "2026-11-01"
+    },
+    {
+      "employee_id": 14,
+      "employee_name": "Natalja Pantelejeva",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-04-13",
+      "end_date": "2026-04-19"
+    },
+    {
+      "employee_id": 14,
+      "employee_name": "Natalja Pantelejeva",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-06-08",
+      "end_date": "2026-06-21"
+    },
+    {
+      "employee_id": 14,
+      "employee_name": "Natalja Pantelejeva",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-10-12",
+      "end_date": "2026-10-18"
+    },
+    {
+      "employee_id": 15,
+      "employee_name": "Maksim Larin",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-03-16",
+      "end_date": "2026-03-22"
+    },
+    {
+      "employee_id": 15,
+      "employee_name": "Maksim Larin",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-06-22",
+      "end_date": "2026-07-07"
+    },
+    {
+      "employee_id": 15,
+      "employee_name": "Maksim Larin",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-10-26",
+      "end_date": "2026-11-01"
+    },
+    {
+      "employee_id": 16,
+      "employee_name": "Deniss Ivanov",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-02-02",
+      "end_date": "2026-02-08"
+    },
+    {
+      "employee_id": 16,
+      "employee_name": "Deniss Ivanov",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-08-03",
+      "end_date": "2026-08-16"
+    },
+    {
+      "employee_id": 16,
+      "employee_name": "Deniss Ivanov",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-11-09",
+      "end_date": "2026-11-15"
+    },
+    {
+      "employee_id": 17,
+      "employee_name": "Vlada Garanovitš",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-03-23",
+      "end_date": "2026-03-29"
+    },
+    {
+      "employee_id": 17,
+      "employee_name": "Vlada Garanovitš",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-05-25",
+      "end_date": "2026-06-07"
+    },
+    {
+      "employee_id": 17,
+      "employee_name": "Vlada Garanovitš",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-09-28",
+      "end_date": "2026-10-04"
+    },
+    {
+      "employee_id": 18,
+      "employee_name": "Pavel Burmistrov",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-03-09",
+      "end_date": "2026-03-15"
+    },
+    {
+      "employee_id": 18,
+      "employee_name": "Pavel Burmistrov",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-07-20",
+      "end_date": "2026-08-02"
+    },
+    {
+      "employee_id": 18,
+      "employee_name": "Pavel Burmistrov",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 8,
+      "start_date": "2026-11-16",
+      "end_date": "2026-11-23"
+    },
+    {
+      "employee_id": 19,
+      "employee_name": "Danila Ivanov",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-04-20",
+      "end_date": "2026-04-26"
+    },
+    {
+      "employee_id": 19,
+      "employee_name": "Danila Ivanov",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-07-06",
+      "end_date": "2026-07-19"
+    },
+    {
+      "employee_id": 19,
+      "employee_name": "Danila Ivanov",
+      "store": "Mustakivi",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-09-21",
+      "end_date": "2026-09-27"
+    },
+    {
+      "employee_id": 20,
+      "employee_name": "Jaanus Kustassoo",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-05-11",
+      "end_date": "2026-05-17"
+    },
+    {
+      "employee_id": 20,
+      "employee_name": "Jaanus Kustassoo",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-06-29",
+      "end_date": "2026-07-12"
+    },
+    {
+      "employee_id": 20,
+      "employee_name": "Jaanus Kustassoo",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-10-19",
+      "end_date": "2026-10-25"
+    },
+    {
+      "employee_id": 21,
+      "employee_name": "Egle Suislepp",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-06-19",
+      "end_date": "2026-06-27"
+    },
+    {
+      "employee_id": 21,
+      "employee_name": "Egle Suislepp",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-07-13",
+      "end_date": "2026-07-19"
+    },
+    {
+      "employee_id": 21,
+      "employee_name": "Egle Suislepp",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-09-21",
+      "end_date": "2026-09-27"
+    },
+    {
+      "employee_id": 21,
+      "employee_name": "Egle Suislepp",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-11-16",
+      "end_date": "2026-11-29"
+    },
+    {
+      "employee_id": 22,
+      "employee_name": "Etta Laura Örd",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-03-30",
+      "end_date": "2026-04-07"
+    },
+    {
+      "employee_id": 22,
+      "employee_name": "Etta Laura Örd",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-06-12",
+      "end_date": "2026-06-18"
+    },
+    {
+      "employee_id": 22,
+      "employee_name": "Etta Laura Örd",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-07-20",
+      "end_date": "2026-08-02"
+    },
+    {
+      "employee_id": 23,
+      "employee_name": "Kalmer Lepasalu",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-05-18",
+      "end_date": "2026-06-01"
+    },
+    {
+      "employee_id": 23,
+      "employee_name": "Kalmer Lepasalu",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-09-28",
+      "end_date": "2026-10-11"
+    },
+    {
+      "employee_id": 24,
+      "employee_name": "Marten Allmets",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-08-03",
+      "end_date": "2026-08-09"
+    },
+    {
+      "employee_id": 24,
+      "employee_name": "Marten Allmets",
+      "store": "Rocca",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-10-26",
+      "end_date": "2026-11-08"
+    },
+    {
+      "employee_id": 25,
+      "employee_name": "Hendrik Tamm",
+      "store": "Viru",
+      "type": "PÕHIPUHKUS",
+      "days": 7,
+      "start_date": "2026-03-09",
+      "end_date": "2026-03-15"
+    },
+    {
+      "employee_id": 25,
+      "employee_name": "Hendrik Tamm",
+      "store": "Viru",
+      "type": "PÕHIPUHKUS",
+      "days": 14,
+      "start_date": "2026-07-13",
+      "end_date": "2026-07-26"
+    },
+    {
+      "employee_id": 25,
+      "employee_name": "Hendrik Tamm",
+      "store": "Viru",
+      "type": "PÕHIPUHKUS",
+      "days": 7,
+      "start_date": "2026-09-21",
+      "end_date": "2026-09-27"
+    },
+    {
+      "employee_id": 26,
+      "employee_name": "Rasmus Visnapuu",
+      "store": "Viru",
+      "type": "PÕHIPUHKUS",
+      "days": 7,
+      "start_date": "2026-03-17",
+      "end_date": "2026-03-23"
+    },
+    {
+      "employee_id": 26,
+      "employee_name": "Rasmus Visnapuu",
+      "store": "Viru",
+      "type": "PÕHIPUHKUS",
+      "days": 7,
+      "start_date": "2026-06-22",
+      "end_date": "2026-06-30"
+    },
+    {
+      "employee_id": 26,
+      "employee_name": "Rasmus Visnapuu",
+      "store": "Viru",
+      "type": "PÕHIPUHKUS",
+      "days": 14,
+      "start_date": "2026-08-03",
+      "end_date": "2026-08-16"
+    },
+    {
+      "employee_id": 27,
+      "employee_name": "Rainer Õun",
+      "store": "Viru",
+      "type": "PÕHIPUHKUS",
+      "days": 7,
+      "start_date": "2026-04-13",
+      "end_date": "2026-04-19"
+    },
+    {
+      "employee_id": 27,
+      "employee_name": "Rainer Õun",
+      "store": "Viru",
+      "type": "PÕHIPUHKUS",
+      "days": 14,
+      "start_date": "2026-05-11",
+      "end_date": "2026-05-25"
+    },
+    {
+      "employee_id": 27,
+      "employee_name": "Rainer Õun",
+      "store": "Viru",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-10-05",
+      "end_date": "2026-10-11"
+    },
+    {
+      "employee_id": 27,
+      "employee_name": "Rainer Õun",
+      "store": "Viru",
+      "type": "LPP",
+      "days": 7,
+      "start_date": "2026-10-12",
+      "end_date": "2026-10-18"
+    },
+    {
+      "employee_id": 28,
+      "employee_name": "Markus Kesa",
+      "store": "Viru",
+      "type": "PÕHIPUHKUS",
+      "days": 7,
+      "start_date": "2026-07-06",
+      "end_date": "2026-07-12"
+    },
+    {
+      "employee_id": 28,
+      "employee_name": "Markus Kesa",
+      "store": "Viru",
+      "type": "PÕHIPUHKUS",
+      "days": 14,
+      "start_date": "2026-10-19",
+      "end_date": "2026-11-01"
+    },
+    {
+      "employee_id": 29,
+      "employee_name": "Riivo Seemre",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-03-09",
+      "end_date": "2026-03-15"
+    },
+    {
+      "employee_id": 29,
+      "employee_name": "Riivo Seemre",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-05-18",
+      "end_date": "2026-06-01"
+    },
+    {
+      "employee_id": 29,
+      "employee_name": "Riivo Seemre",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-07-27",
+      "end_date": "2026-08-02"
+    },
+    {
+      "employee_id": 29,
+      "employee_name": "Riivo Seemre",
+      "store": "Ülemiste",
+      "type": "LPP",
+      "days": 7,
+      "start_date": "2026-10-12",
+      "end_date": "2026-10-18"
+    },
+    {
+      "employee_id": 30,
+      "employee_name": "Andri Mets",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-01-19",
+      "end_date": "2026-01-25"
+    },
+    {
+      "employee_id": 30,
+      "employee_name": "Andri Mets",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-06-15",
+      "end_date": "2026-06-30"
+    },
+    {
+      "employee_id": 30,
+      "employee_name": "Andri Mets",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-09-14",
+      "end_date": "2026-09-20"
+    },
+    {
+      "employee_id": 31,
+      "employee_name": "Kristjan Reiners",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-03-23",
+      "end_date": "2026-03-29"
+    },
+    {
+      "employee_id": 31,
+      "employee_name": "Kristjan Reiners",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-07-13",
+      "end_date": "2026-07-26"
+    },
+    {
+      "employee_id": 31,
+      "employee_name": "Kristjan Reiners",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-10-26",
+      "end_date": "2026-11-01"
+    },
+    {
+      "employee_id": 32,
+      "employee_name": "Otto-Edvard Rästas",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-02-09",
+      "end_date": "2026-02-15"
+    },
+    {
+      "employee_id": 32,
+      "employee_name": "Otto-Edvard Rästas",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-06-29",
+      "end_date": "2026-07-12"
+    },
+    {
+      "employee_id": 32,
+      "employee_name": "Otto-Edvard Rästas",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-10-05",
+      "end_date": "2026-10-11"
+    },
+    {
+      "employee_id": 33,
+      "employee_name": "Kevin Pihlak",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-01-12",
+      "end_date": "2026-01-18"
+    },
+    {
+      "employee_id": 33,
+      "employee_name": "Kevin Pihlak",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-03-02",
+      "end_date": "2026-03-08"
+    },
+    {
+      "employee_id": 33,
+      "employee_name": "Kevin Pihlak",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-05-04",
+      "end_date": "2026-05-10"
+    },
+    {
+      "employee_id": 33,
+      "employee_name": "Kevin Pihlak",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-08-03",
+      "end_date": "2026-08-16"
+    },
+    {
+      "employee_id": 33,
+      "employee_name": "Kevin Pihlak",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-11-16",
+      "end_date": "2026-11-22"
+    },
+    {
+      "employee_id": 34,
+      "employee_name": "Kaur-Mattias Tern",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 14,
+      "start_date": "2026-06-01",
+      "end_date": "2026-06-14"
+    },
+    {
+      "employee_id": 34,
+      "employee_name": "Kaur-Mattias Tern",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-10-19",
+      "end_date": "2026-10-25"
+    },
+    {
+      "employee_id": 34,
+      "employee_name": "Kaur-Mattias Tern",
+      "store": "Ülemiste",
+      "type": "PP",
+      "days": 7,
+      "start_date": "2026-11-09",
+      "end_date": "2026-11-15"
+    }
+  ]
+}

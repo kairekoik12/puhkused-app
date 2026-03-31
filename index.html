@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="et" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puhkuste Haldus — Klick</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232563eb'/><text x='16' y='22' text-anchor='middle' font-size='18' fill='white'>P</text></svg>">
+</head>
+<body>
+
+  <!-- ============================================================
+       LOGIN SCREEN
+       ============================================================ -->
+  <div id="login-screen">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-logo">
+          <div class="logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+              <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+            </svg>
+          </div>
+          <h1>Puhkuste Haldus</h1>
+          <span class="logo-sub">KLICK EESTI</span>
+        </div>
+        <form class="login-form" id="login-form">
+          <div class="login-error" id="login-error"></div>
+          <div class="form-field">
+            <label for="login-email">E-posti aadress</label>
+            <input type="email" id="login-email" autocomplete="email" required placeholder="nimi@klick.ee">
+          </div>
+          <div class="form-field">
+            <label for="login-password">Parool</label>
+            <input type="password" id="login-password" autocomplete="current-password" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="login-btn" id="login-btn">
+            <span class="spinner" id="login-spinner" style="display:none;"></span>
+            Logi sisse
+          </button>
+        </form>
+        <div class="login-footer" style="text-align:center; margin-top:1.5rem; font-size:0.75rem; color:var(--color-text-muted);">
+          Klick Eesti AS &copy; 2026
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       APP SCREEN
+       ============================================================ -->
+  <div id="app-screen">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="s-logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <div>
+          <div class="s-title">Puhkused</div>
+          <div class="s-subtitle">KLICK EESTI</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Vaated</div>
+
+        <button class="nav-item active" data-view="weekly" onclick="switchView('weekly')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Nädala ülevaade
+        </button>
+
+        <button class="nav-item" data-view="store" onclick="switchView('store')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Poe vaade
+        </button>
+
+        <button class="nav-item" data-view="calendar" onclick="switchView('calendar')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+            <rect x="7" y="14" width="3" height="3" rx="0.5"/>
+            <rect x="14" y="14" width="3" height="3" rx="0.5"/>
+          </svg>
+          Aasta kalender
+        </button>
+
+        <button class="nav-item" data-view="employees" onclick="switchView('employees')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Töötajad
+        </button>
+
+        <div class="nav-label" style="margin-top:var(--space-4)">Tegevused</div>
+
+        <button class="nav-item" onclick="openVacationModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+          Lisa puhkus
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar" id="user-avatar">?</div>
+          <span class="user-name" id="user-name">—</span>
+        </div>
+        <div class="sidebar-actions">
+          <button onclick="toggleTheme()" title="Teema">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </button>
+          <button onclick="doLogout()" title="Logi välja">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Mobile header -->
+      <div class="mobile-header">
+        <button class="btn-icon" onclick="document.getElementById('sidebar').classList.toggle('open')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <span style="font-weight:700;font-size:var(--text-lg);">Puhkused</span>
+      </div>
+
+      <!-- ============ WEEKLY OVERVIEW ============ -->
+      <div id="view-weekly" class="view-panel active">
+        <div class="page-header">
+          <div>
+            <h2>Nädala ülevaade</h2>
+            <div class="subtitle">Kes on sel nädalal puhkusel</div>
+          </div>
+          <div class="week-nav">
+            <button onclick="changeWeek(-1)" title="Eelmine nädal">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <span class="week-label" id="week-label">—</span>
+            <button onclick="changeWeek(1)" title="Järgmine nädal">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <button class="today-btn" onclick="goToCurrentWeek()">Täna</button>
+          </div>
+        </div>
+
+        <div class="stats-row" id="weekly-stats"></div>
+
+        <div class="card">
+          <div class="card-body" id="weekly-body" style="padding:0;">
+            <!-- Table generated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ STORE VIEW ============ -->
+      <div id="view-store" class="view-panel">
+        <div class="page-header">
+          <div>
+            <h2>Poe vaade</h2>
+            <div class="subtitle">Töötajate puhkuste ajakava</div>
+          </div>
+          <div class="store-selector">
+            <select id="store-select" onchange="renderStoreView()">
+              <option value="Järve">Järve (TJ)</option>
+              <option value="Rocca">Rocca</option>
+              <option value="Ülemiste">Ülemiste (TU)</option>
+              <option value="Kristiine">Kristiine (TE)</option>
+              <option value="Mustakivi">Mustakivi</option>
+              <option value="Viru">Viru (TV)</option>
+            </select>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body" style="padding:0; overflow-x:auto;" id="store-gantt-body">
+            <!-- Gantt generated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ YEAR CALENDAR ============ -->
+      <div id="view-calendar" class="view-panel">
+        <div class="page-header">
+          <div>
+            <h2>Aasta kalender</h2>
+            <div class="subtitle">Puhkuste soojuskaart — mitu inimest on puhkusel igal päeval</div>
+          </div>
+          <div class="year-selector">
+            <select id="year-select" onchange="renderYearCalendar()">
+              <option value="2025">2025</option>
+              <option value="2026" selected>2026</option>
+              <option value="2027">2027</option>
+            </select>
+          </div>
+        </div>
+        <div id="calendar-body">
+          <!-- Calendar generated by JS -->
+        </div>
+        <div class="heatmap-legend">
+          <span>Vähem</span>
+          <div class="legend-box" style="background:rgba(37,99,235,0.1)"></div>
+          <div class="legend-box" style="background:rgba(37,99,235,0.2)"></div>
+          <div class="legend-box" style="background:rgba(37,99,235,0.35)"></div>
+          <div class="legend-box" style="background:rgba(37,99,235,0.5)"></div>
+          <div class="legend-box" style="background:rgba(37,99,235,0.7)"></div>
+          <div class="legend-box" style="background:rgba(220,38,38,0.6)"></div>
+          <span>Rohkem</span>
+        </div>
+      </div>
+
+      <!-- ============ EMPLOYEES ============ -->
+      <div id="view-employees" class="view-panel">
+        <div class="page-header">
+          <div>
+            <h2>Töötajad</h2>
+            <div class="subtitle">Kõik töötajad ja nende puhkusejäägid</div>
+          </div>
+          <div class="filter-bar">
+            <input type="text" class="search-input" placeholder="Otsi töötajat..." id="emp-search" oninput="renderEmployees()">
+            <button class="btn btn-primary btn-sm" onclick="openEmployeeModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Lisa töötaja
+            </button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body" style="padding:0;" id="employees-body">
+            <!-- Table generated by JS -->
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ============================================================
+       MODALS
+       ============================================================ -->
+
+  <!-- Add/Edit Vacation Modal -->
+  <div class="modal-overlay" id="modal-vacation">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="vacation-modal-title">Lisa puhkus</h3>
+        <button class="modal-close" onclick="closeModal('modal-vacation')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-warning" id="vacation-warning"></div>
+        <div class="form-field">
+          <label for="vac-employee">Töötaja</label>
+          <select id="vac-employee" onchange="updateVacationBalance()">
+            <option value="">Vali töötaja...</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="vac-type">Puhkuse tüüp</label>
+          <select id="vac-type">
+            <option value="PP">Põhipuhkus (PP)</option>
+            <option value="LPP">Lisapuhkus (LPP)</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="vac-start">Algus</label>
+            <input type="date" id="vac-start" onchange="calcVacDays()">
+          </div>
+          <div class="form-field">
+            <label for="vac-end">Lõpp</label>
+            <input type="date" id="vac-end" onchange="calcVacDays()">
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Kalendripäevad: <strong id="vac-days-count">0</strong></label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-vacation')">Tühista</button>
+        <button class="btn btn-primary" id="vacation-save-btn" onclick="saveVacation()">Salvesta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Employee Modal -->
+  <div class="modal-overlay" id="modal-employee">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="employee-modal-title">Lisa töötaja</h3>
+        <button class="modal-close" onclick="closeModal('modal-employee')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-field">
+          <label for="emp-name">Nimi</label>
+          <input type="text" id="emp-name" placeholder="Eesnimi Perenimi">
+        </div>
+        <div class="form-field">
+          <label for="emp-position">Ametikoht</label>
+          <select id="emp-position">
+            <option value="Müügikonsultant">Müügikonsultant</option>
+            <option value="Müügiekspert">Müügiekspert</option>
+            <option value="Kaupluse juhataja">Kaupluse juhataja</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="emp-store">Kauplus</label>
+          <select id="emp-store">
+            <option value="Järve">Järve (TJ)</option>
+            <option value="Rocca">Rocca</option>
+            <option value="Ülemiste">Ülemiste (TU)</option>
+            <option value="Kristiine">Kristiine (TE)</option>
+            <option value="Mustakivi">Mustakivi</option>
+            <option value="Viru">Viru (TV)</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="emp-contract">Lepingu info</label>
+          <input type="text" id="emp-contract" placeholder="Nt: Enne 1.07.25">
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="emp-balance-start">Ülekanne 2025</label>
+            <input type="number" id="emp-balance-start" step="0.01" value="0" min="-100">
+          </div>
+          <div class="form-field">
+            <label for="emp-balance-year">2026 puhkus</label>
+            <input type="number" id="emp-balance-year" step="0.01" value="28" min="0">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-employee')">Tühista</button>
+        <button class="btn btn-primary" id="employee-save-btn" onclick="saveEmployee()">Salvesta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Employee Detail Modal -->
+  <div class="modal-overlay" id="modal-emp-detail">
+    <div class="modal" style="max-width:560px;">
+      <div class="modal-header">
+        <h3>Töötaja info</h3>
+        <button class="modal-close" onclick="closeModal('modal-emp-detail')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="emp-detail-body">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Delete Dialog -->
+  <div class="modal-overlay confirm-dialog" id="modal-confirm">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="confirm-title">Kinnita</h3>
+        <button class="modal-close" onclick="closeModal('modal-confirm')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="confirm-text" id="confirm-text">Kas oled kindel?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-confirm')">Tühista</button>
+        <button class="btn btn-danger" id="confirm-action-btn">Kustuta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
