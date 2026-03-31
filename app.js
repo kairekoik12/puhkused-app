@@ -32,6 +32,7 @@ let currentWeekStart = null;
 let editingVacationId = null;
 let editingEmployeeId = null;
 let currentView = 'weekly';
+let showEndOfPeriodBalance = false; // toggle: tänane jääk vs perioodi lõpu jääk
 
 // ============================================================
 // INIT
@@ -293,16 +294,55 @@ function getNextEmpId() {
   return employees.length > 0 ? Math.max(...employees.map(e => e.id || 0)) + 1 : 1;
 }
 
-function calcUsedDays(empId) {
+function calcUsedDays(empId, upToDate) {
+  // If upToDate given, count only vacations that ended on or before that date
+  return vacations
+    .filter(v => {
+      if (v.employee_id !== empId) return false;
+      if (upToDate && v.end_date > upToDate) return false;
+      return true;
+    })
+    .reduce((sum, v) => sum + (v.days || daysBetween(v.start_date, v.end_date)), 0);
+}
+
+function calcAllPlannedDays(empId) {
+  // All planned vacation days for the year (past + future)
   return vacations
     .filter(v => v.employee_id === empId)
     .reduce((sum, v) => sum + (v.days || daysBetween(v.start_date, v.end_date)), 0);
 }
 
+function calcEarnedVacationDays(emp) {
+  // 28 calendar days per year, accrued proportionally from 01.01
+  const yearStart = new Date(2026, 0, 1);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const daysSinceYearStart = Math.floor((today - yearStart) / (1000 * 60 * 60 * 24));
+  const annualDays = emp.balance_year_2026 || 28;
+  const earned = (annualDays / 365) * daysSinceYearStart;
+  return Math.round(earned * 100) / 100;
+}
+
 function calcRemainingBalance(emp) {
-  const total = emp.balance_end_2026 || ((emp.balance_start_2025 || 0) + (emp.balance_year_2026 || 0));
-  const used = calcUsedDays(emp.id);
-  return Math.round((total - used) * 100) / 100;
+  const carryOver = emp.balance_start_2025 || 0;
+
+  if (showEndOfPeriodBalance) {
+    // Perioodi lõpu jääk: algjääk + kogu aasta puhkus − kõik planeeritud
+    const total = carryOver + (emp.balance_year_2026 || 28);
+    const allPlanned = calcAllPlannedDays(emp.id);
+    return Math.round((total - allPlanned) * 100) / 100;
+  } else {
+    // Tänane jääk: algjääk + teenitud päevad tänaseni − kasutatud kuni tänaseni
+    const earned = calcEarnedVacationDays(emp);
+    const todayStr = new Date().toISOString().split('T')[0];
+    const usedToDate = calcUsedDays(emp.id, todayStr);
+    return Math.round((carryOver + earned - usedToDate) * 100) / 100;
+  }
+}
+
+function toggleBalanceMode() {
+  showEndOfPeriodBalance = !showEndOfPeriodBalance;
+  renderCurrentView();
 }
 
 // ============================================================
@@ -393,7 +433,14 @@ function renderWeeklyView() {
       <th>Tüüp</th>
       <th>Periood</th>
       <th>Päevi</th>
-      <th>Jääk</th>
+      <th>
+        <div class="balance-header-toggle">
+          <span>${showEndOfPeriodBalance ? 'Jääk (aasta lõpp)' : 'Jääk (täna)'}</span>
+          <button class="balance-toggle-btn" onclick="toggleBalanceMode()" title="${showEndOfPeriodBalance ? 'Näita tänast jääki' : 'Näita perioodi lõpu jääki'}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+        </div>
+      </th>
     </tr></thead><tbody>`;
 
   weekVacations.forEach(v => {
@@ -617,7 +664,7 @@ function renderEmployees() {
   });
 
   let html = '<table class="employees-table"><thead><tr>';
-  html += '<th>Nimi</th><th>Ametikoht</th><th>Leping</th><th>Algne jääk</th><th>2026</th><th>Kokku</th><th>Kasutatud</th><th>Jääk</th>';
+  html += `<th>Nimi</th><th>Ametikoht</th><th>Leping</th><th>Algne jääk</th><th>2026</th><th>${showEndOfPeriodBalance ? 'Teenitud' : 'Teenitud tänaseni'}</th><th>Kasutatud</th><th><div class="balance-header-toggle"><span>${showEndOfPeriodBalance ? 'Jääk (aasta lõpp)' : 'Jääk (täna)'}</span><button class="balance-toggle-btn" onclick="toggleBalanceMode()" title="${showEndOfPeriodBalance ? 'Näita tänast jääki' : 'Näita perioodi lõpu jääki'}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></button></div></th>`;
   if (isAdmin) html += '<th>Tegevused</th>';
   html += '</tr></thead><tbody>';
 
@@ -631,9 +678,10 @@ function renderEmployees() {
     </td></tr>`;
 
     storeEmps.forEach(emp => {
-      const used = calcUsedDays(emp.id);
-      const total = emp.balance_end_2026 || ((emp.balance_start_2025 || 0) + (emp.balance_year_2026 || 0));
-      const remaining = Math.round((total - used) * 100) / 100;
+      const todayStr = new Date().toISOString().split('T')[0];
+      const earned = showEndOfPeriodBalance ? (emp.balance_year_2026 || 28) : calcEarnedVacationDays(emp);
+      const used = showEndOfPeriodBalance ? calcAllPlannedDays(emp.id) : calcUsedDays(emp.id, todayStr);
+      const remaining = calcRemainingBalance(emp);
       const remClass = remaining < 0 ? 'balance-neg' : remaining < 5 ? 'balance-warn' : 'balance-ok';
 
       html += `<tr>
@@ -642,7 +690,7 @@ function renderEmployees() {
         <td style="font-size:var(--text-sm);color:var(--color-text-muted);">${escHtml(emp.contract_date || '')}</td>
         <td style="text-align:center;">${emp.balance_start_2025}</td>
         <td style="text-align:center;">${emp.balance_year_2026}</td>
-        <td style="text-align:center;font-weight:600;">${total}</td>
+        <td style="text-align:center;font-weight:600;">${earned}</td>
         <td style="text-align:center;">${used}</td>
         <td style="text-align:center;font-weight:600;" class="${remClass}">${remaining}</td>`;
 
@@ -679,10 +727,15 @@ function showEmployeeDetail(empId) {
   if (!emp) return;
 
   const empVacs = vacations.filter(v => v.employee_id === empId);
-  const used = calcUsedDays(empId);
-  const total = emp.balance_end_2026 || ((emp.balance_start_2025 || 0) + (emp.balance_year_2026 || 0));
-  const remaining = Math.round((total - used) * 100) / 100;
-  const remClass = remaining < 0 ? 'balance-neg' : remaining < 5 ? 'balance-warn' : 'balance-ok';
+  const todayStr = new Date().toISOString().split('T')[0];
+  const earned = calcEarnedVacationDays(emp);
+  const usedToDate = calcUsedDays(empId, todayStr);
+  const allPlanned = calcAllPlannedDays(empId);
+  const carryOver = emp.balance_start_2025 || 0;
+  const todayBalance = Math.round((carryOver + earned - usedToDate) * 100) / 100;
+  const endBalance = Math.round((carryOver + (emp.balance_year_2026 || 28) - allPlanned) * 100) / 100;
+  const todayClass = todayBalance < 0 ? 'balance-neg' : todayBalance < 5 ? 'balance-warn' : 'balance-ok';
+  const endClass = endBalance < 0 ? 'balance-neg' : endBalance < 5 ? 'balance-warn' : 'balance-ok';
   const storeInfo = getStoreInfo(emp.store);
   const isAdmin = userProfile && userProfile.role === 'admin';
 
@@ -697,15 +750,23 @@ function showEmployeeDetail(empId) {
     <div class="balance-grid">
       <div class="balance-item">
         <div class="b-label">Ülekanne 2025</div>
-        <div class="b-value">${emp.balance_start_2025}</div>
+        <div class="b-value">${carryOver}</div>
       </div>
       <div class="balance-item">
-        <div class="b-label">2026 puhkus</div>
-        <div class="b-value">${emp.balance_year_2026}</div>
+        <div class="b-label">Teenitud tänaseni</div>
+        <div class="b-value">${earned}</div>
       </div>
       <div class="balance-item">
-        <div class="b-label">Jääk</div>
-        <div class="b-value ${remClass}">${remaining}</div>
+        <div class="b-label">Kasutatud</div>
+        <div class="b-value">${usedToDate}</div>
+      </div>
+      <div class="balance-item">
+        <div class="b-label">Jääk täna</div>
+        <div class="b-value ${todayClass}">${todayBalance}</div>
+      </div>
+      <div class="balance-item">
+        <div class="b-label">Jääk aasta lõpus</div>
+        <div class="b-value ${endClass}">${endBalance}</div>
       </div>
     </div>
     <h4 style="font-size:var(--text-base);font-weight:600;margin-bottom:var(--space-3);">Puhkuse perioodid (${empVacs.length})</h4>
@@ -834,9 +895,10 @@ function updateVacationBalance() {
   if (!emp) return;
 
   const newDays = daysBetween(start, end);
-  const total = emp.balance_end_2026 || ((emp.balance_start_2025 || 0) + (emp.balance_year_2026 || 0));
+  const carryOver = emp.balance_start_2025 || 0;
+  const total = carryOver + (emp.balance_year_2026 || 28);
 
-  // Calculate used, excluding current editing vacation
+  // Calculate all planned days, excluding current editing vacation
   let used = vacations
     .filter(v => v.employee_id === empId && v.id !== editingVacationId)
     .reduce((sum, v) => sum + (v.days || daysBetween(v.start_date, v.end_date)), 0);
