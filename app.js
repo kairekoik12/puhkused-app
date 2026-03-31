@@ -123,6 +123,11 @@ async function initApp() {
 
   // Init week
   currentWeekStart = getMonday(new Date());
+
+  // Set store month to current month
+  const storeMonthSel = document.getElementById('store-month-select');
+  if (storeMonthSel) storeMonthSel.value = new Date().getMonth();
+
   renderCurrentView();
 }
 
@@ -249,6 +254,7 @@ function renderCurrentView() {
     case 'store': renderStoreView(); break;
     case 'calendar': renderYearCalendar(); break;
     case 'employees': renderEmployees(); break;
+    case 'managers': renderManagers(); break;
   }
 }
 
@@ -479,7 +485,10 @@ function getWeekNumber(d) {
 function renderStoreView() {
   const storeName = document.getElementById('store-select').value;
   const storeEmps = employees.filter(e => e.store === storeName);
-  const year = 2026; // fixed for now
+  const year = 2026;
+  // Determine which month to show (use store-month-select if present, else current month)
+  const monthSel = document.getElementById('store-month-select');
+  const month = monthSel ? parseInt(monthSel.value) : new Date().getMonth();
 
   if (storeEmps.length === 0) {
     document.getElementById('store-gantt-body').innerHTML = `
@@ -489,13 +498,32 @@ function renderStoreView() {
     return;
   }
 
-  // Build gantt table
-  let html = '<div class="gantt-wrapper"><table class="gantt-table"><thead><tr>';
-  html += '<th class="name-col">Töötaja</th>';
-  html += '<th class="balance-col">Jääk</th>';
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
 
-  for (let m = 0; m < 12; m++) {
-    html += `<th class="month-col">${MONTH_NAMES_ET[m]}</th>`;
+  // Build calendar grid table
+  let html = '<div class="store-calendar-wrapper"><table class="store-cal-table"><thead><tr>';
+  html += '<th class="name-col">Töötaja</th>';
+  html += `<th class="balance-col">
+    <div class="balance-header-toggle">
+      <span>${showEndOfPeriodBalance ? 'Jääk (lõpp)' : 'Jääk'}</span>
+      <button class="balance-toggle-btn" onclick="toggleBalanceMode()" title="Vaheta jäägi režiimi">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      </button>
+    </div>
+  </th>`;
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const dow = (new Date(year, month, d).getDay() + 6) % 7; // Mon=0
+    const isWeekend = dow >= 5;
+    const isToday = dateStr === todayStr;
+    const dayLabel = DAY_NAMES_ET[dow];
+    html += `<th class="day-col ${isWeekend ? 'weekend' : ''} ${isToday ? 'today-col' : ''}">
+      <div class="day-num">${d}</div>
+      <div class="day-name">${dayLabel}</div>
+    </th>`;
   }
   html += '</tr></thead><tbody>';
 
@@ -511,42 +539,26 @@ function renderStoreView() {
     </td>`;
     html += `<td class="balance-cell"><span class="${remClass}">${remaining}</span></td>`;
 
-    for (let m = 0; m < 12; m++) {
-      const monthStart = new Date(year, m, 1);
-      const monthEnd = new Date(year, m + 1, 0);
-      const daysInMonth = monthEnd.getDate();
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const dow = (new Date(year, month, d).getDay() + 6) % 7;
+      const isWeekend = dow >= 5;
+      const isToday = dateStr === todayStr;
 
-      // Find vacations in this month
-      const monthVacs = empVacs.filter(v =>
-        dateRangesOverlap(v.start_date, v.end_date, monthStart.toISOString().split('T')[0], monthEnd.toISOString().split('T')[0])
-      );
+      // Check if employee is on vacation this day
+      const vacOnDay = empVacs.find(v => v.start_date <= dateStr && v.end_date >= dateStr);
 
-      html += '<td class="month-cell"><div class="month-bar-container">';
+      let cellClass = isWeekend ? 'weekend' : '';
+      if (isToday) cellClass += ' today-cell';
+      let cellContent = '';
 
-      monthVacs.forEach(v => {
-        const vStart = new Date(v.start_date);
-        const vEnd = new Date(v.end_date);
-        const barStart = Math.max(1, vStart.getDate());
-        const effectiveStartMonth = vStart.getFullYear() === year && vStart.getMonth() === m;
-        const effectiveEndMonth = vEnd.getFullYear() === year && vEnd.getMonth() === m;
+      if (vacOnDay) {
+        const typeNorm = (vacOnDay.type || 'PP').toUpperCase().replace('PÕHIPUHKUS', 'PP');
+        cellClass += typeNorm === 'LPP' ? ' vac-lpp' : ' vac-pp';
+        cellContent = typeNorm;
+      }
 
-        const startDay = effectiveStartMonth ? vStart.getDate() : 1;
-        const endDay = effectiveEndMonth ? vEnd.getDate() : daysInMonth;
-
-        const leftPct = ((startDay - 1) / daysInMonth) * 100;
-        const widthPct = ((endDay - startDay + 1) / daysInMonth) * 100;
-
-        const typeNorm = (v.type || 'PP').toUpperCase().replace('PÕHIPUHKUS', 'PP');
-        const typeClass = typeNorm === 'LPP' ? 'type-lpp' : 'type-pp';
-
-        html += `<div class="vacation-bar ${typeClass}"
-          style="left:${leftPct}%;width:${widthPct}%;"
-          title="${escHtml(v.employee_name)}: ${formatDate(v.start_date)} – ${formatDate(v.end_date)} (${v.days || daysBetween(v.start_date, v.end_date)} p)"
-          onclick="event.stopPropagation(); editVacation(${v.id})"
-        >${widthPct > 20 ? (v.days || '') : ''}</div>`;
-      });
-
-      html += '</div></td>';
+      html += `<td class="cal-day ${cellClass}" title="${vacOnDay ? escHtml(emp.name) + ': ' + formatDate(vacOnDay.start_date) + ' \u2013 ' + formatDate(vacOnDay.end_date) : ''}">${cellContent}</td>`;
     }
 
     html += '</tr>';
@@ -616,7 +628,8 @@ function renderYearCalendar() {
 
       const tooltip = count > 0 ? `${d}. ${MONTH_NAMES_ET[m]} — ${count} inimest puhkusel` : '';
 
-      html += `<div class="day-cell ${heatClass} ${isWeekend ? 'weekend' : ''} ${isToday ? 'today' : ''}" ${tooltip ? `data-tooltip="${escHtml(tooltip)}"` : ''}>${d}</div>`;
+      const clickHandler = count > 0 ? `onclick="showDayDetail('${dateStr}')"` : '';
+      html += `<div class="day-cell ${heatClass} ${isWeekend ? 'weekend' : ''} ${isToday ? 'today' : ''} ${count > 0 ? 'clickable' : ''}" ${tooltip ? `data-tooltip="${escHtml(tooltip)}"` : ''} ${clickHandler}>${d}</div>`;
 
       dayOfWeek++;
       if (dayOfWeek >= 7 && d < lastDay.getDate()) {
@@ -636,6 +649,52 @@ function renderYearCalendar() {
 
   html += '</div>'; // year-grid
   document.getElementById('calendar-body').innerHTML = html;
+}
+
+function showDayDetail(dateStr) {
+  const d = new Date(dateStr);
+  const dayNum = d.getDate();
+  const monthName = MONTH_FULL_ET[d.getMonth()];
+  const dayName = DAY_NAMES_ET[(d.getDay() + 6) % 7];
+
+  // Find all vacations that include this date
+  const dayVacs = vacations.filter(v => v.start_date <= dateStr && v.end_date >= dateStr);
+
+  let html = `<h4 style="margin-bottom:var(--space-3);font-size:var(--text-base);">${dayName}, ${dayNum}. ${monthName} ${d.getFullYear()}</h4>`;
+  html += `<p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-4);">${dayVacs.length} töötajat puhkusel</p>`;
+
+  if (dayVacs.length > 0) {
+    // Group by store
+    const byStore = {};
+    dayVacs.forEach(v => {
+      if (!byStore[v.store]) byStore[v.store] = [];
+      byStore[v.store].push(v);
+    });
+
+    html += '<div style="display:flex;flex-direction:column;gap:var(--space-3);">';
+    STORES.forEach(store => {
+      const storeVacs = byStore[store.name];
+      if (!storeVacs || storeVacs.length === 0) return;
+      html += `<div>
+        <span class="store-badge ${store.cssClass}" style="font-size:var(--text-xs);padding:2px 8px;">${store.name}</span>
+        <div style="margin-top:var(--space-2);">`;
+      storeVacs.forEach(v => {
+        const typeNorm = (v.type || 'PP').toUpperCase().replace('PÕHIPUHKUS', 'PP');
+        const typeClass = typeNorm === 'LPP' ? 'lpp' : 'pp';
+        html += `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:var(--text-sm);">
+          <strong>${escHtml(v.employee_name)}</strong>
+          <span class="vac-type-badge ${typeClass}" style="font-size:0.65rem;">${typeNorm}</span>
+          <span style="color:var(--color-text-muted);">${formatDate(v.start_date)} – ${formatDate(v.end_date)}</span>
+        </div>`;
+      });
+      html += '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  document.getElementById('emp-detail-body').innerHTML = html;
+  document.querySelector('#modal-emp-detail .modal-header h3').textContent = 'Puhkusel';
+  openModal('modal-emp-detail');
 }
 
 // ============================================================
@@ -1000,6 +1059,103 @@ function confirmDeleteVacation(vacId) {
   };
 
   openModal('modal-confirm');
+}
+
+// ============================================================
+// MANAGERS VIEW
+// ============================================================
+function renderManagers() {
+  // Find all managers (juhataja in position or name contains "mj" suffix in original data)
+  const managers = employees.filter(e =>
+    e.position && (e.position.toLowerCase().includes('juhataja'))
+  );
+
+  if (managers.length === 0) {
+    document.getElementById('managers-body').innerHTML = `
+      <div class="empty-state">
+        <p>Juhatajaid ei leitud</p>
+        <div class="empty-sub">Kontrolli, et töötajate ametikoht sisaldab "juhataja"</div>
+      </div>`;
+    return;
+  }
+
+  managers.sort((a, b) => {
+    const si = STORES.findIndex(s => s.name === a.store);
+    const sj = STORES.findIndex(s => s.name === b.store);
+    return si - sj;
+  });
+
+  const todayStr = new Date().toISOString().split('T')[0];
+  let html = '<div class="managers-grid">';
+
+  managers.forEach(mgr => {
+    const storeInfo = getStoreInfo(mgr.store);
+    const mgrVacs = vacations.filter(v => v.employee_id === mgr.id);
+
+    // Calc both balances
+    const savedMode = showEndOfPeriodBalance;
+    showEndOfPeriodBalance = false;
+    const todayBalance = calcRemainingBalance(mgr);
+    showEndOfPeriodBalance = true;
+    const endBalance = calcRemainingBalance(mgr);
+    showEndOfPeriodBalance = savedMode;
+
+    const todayClass = todayBalance < 0 ? 'balance-neg' : todayBalance < 5 ? 'balance-warn' : 'balance-ok';
+    const endClass = endBalance < 0 ? 'balance-neg' : endBalance < 5 ? 'balance-warn' : 'balance-ok';
+
+    const currentVac = mgrVacs.find(v => v.start_date <= todayStr && v.end_date >= todayStr);
+    const nextVac = mgrVacs.filter(v => v.start_date > todayStr).sort((a, b) => a.start_date.localeCompare(b.start_date))[0];
+
+    html += `<div class="manager-card">
+      <div class="manager-header">
+        <div class="emp-avatar-lg" style="font-size:1.2rem;width:48px;height:48px;">${mgr.name.charAt(0)}</div>
+        <div>
+          <h3 style="font-size:var(--text-base);font-weight:600;margin-bottom:2px;">${escHtml(mgr.name)}</h3>
+          <span class="store-badge ${storeInfo.cssClass}">${escHtml(mgr.store)}</span>
+        </div>
+      </div>`;
+
+    if (currentVac) {
+      html += `<div class="manager-status on-vacation">
+        <span class="status-dot"></span> Puhkusel: ${formatDate(currentVac.start_date)} – ${formatDate(currentVac.end_date)}
+      </div>`;
+    } else {
+      html += `<div class="manager-status at-work">
+        <span class="status-dot"></span> Tööl
+      </div>`;
+    }
+
+    html += `<div class="manager-balance">
+      <div><span class="b-label">Jääk täna</span> <span class="${todayClass}" style="font-weight:600;">${todayBalance} p</span></div>
+      <div><span class="b-label">Aasta lõpus</span> <span class="${endClass}" style="font-weight:600;">${endBalance} p</span></div>
+    </div>`;
+
+    if (nextVac && !currentVac) {
+      html += `<div class="manager-next-vac">
+        Järgmine: ${formatDate(nextVac.start_date)} – ${formatDate(nextVac.end_date)} (${nextVac.days || daysBetween(nextVac.start_date, nextVac.end_date)} p)
+      </div>`;
+    }
+
+    if (mgrVacs.length > 0) {
+      html += '<div class="manager-vacs"><div class="b-label" style="margin-bottom:6px;">Puhkused 2026</div>';
+      [...mgrVacs].sort((a, b) => a.start_date.localeCompare(b.start_date)).forEach(v => {
+        const typeNorm = (v.type || 'PP').toUpperCase().replace('PÕHIPUHKUS', 'PP');
+        const typeClass = typeNorm === 'LPP' ? 'lpp' : 'pp';
+        const isPast = v.end_date < todayStr;
+        html += `<div class="manager-vac-row ${isPast ? 'past' : ''}">
+          <span class="vac-type-badge ${typeClass}" style="font-size:0.6rem;">${typeNorm}</span>
+          ${formatDate(v.start_date)} – ${formatDate(v.end_date)}
+          <span style="color:var(--color-text-muted);">(${v.days || daysBetween(v.start_date, v.end_date)} p)</span>
+        </div>`;
+      });
+      html += '</div>';
+    }
+
+    html += '</div>';
+  });
+
+  html += '</div>';
+  document.getElementById('managers-body').innerHTML = html;
 }
 
 // ============================================================
