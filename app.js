@@ -702,10 +702,11 @@ function renderEmployees() {
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
             </svg>
           </button>
-          <button class="btn-icon" onclick="confirmDeleteEmployee(${emp.id})" title="Kustuta" style="color:var(--color-error);">
+          <button class="btn-icon" onclick="confirmDeleteEmployee(${emp.id})" title="Töötaja lahkus" style="color:var(--color-error);">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="3 6 5 6 21 6"/>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
             </svg>
           </button>
         </td>`;
@@ -812,13 +813,9 @@ function showEmployeeDetail(empId) {
 // ============================================================
 // VACATION CRUD
 // ============================================================
-function openVacationModal(empId) {
-  editingVacationId = null;
-  document.getElementById('vacation-modal-title').textContent = 'Lisa puhkus';
-  document.getElementById('vacation-save-btn').textContent = 'Salvesta';
 
-  // Populate employee select
-  const sel = document.getElementById('vac-employee');
+function populateEmployeeSelect(selectId) {
+  const sel = document.getElementById(selectId);
   sel.innerHTML = '<option value="">Vali töötaja...</option>';
   const sorted = [...employees].sort((a, b) => a.store.localeCompare(b.store) || a.name.localeCompare(b.name));
   sorted.forEach(emp => {
@@ -827,8 +824,31 @@ function openVacationModal(empId) {
     opt.textContent = `${emp.name} (${emp.store})`;
     sel.appendChild(opt);
   });
+  // Add "new employee" option
+  const newOpt = document.createElement('option');
+  newOpt.value = '__new__';
+  newOpt.textContent = '\u2795 Lisa uus t\u00f6\u00f6taja...';
+  sel.appendChild(newOpt);
 
-  if (empId) sel.value = empId;
+  // Handle "new employee" selection
+  sel.onchange = function() {
+    if (sel.value === '__new__') {
+      sel.value = ''; // reset
+      openEmployeeModal(null, true); // open employee modal, return to vacation modal after
+    } else {
+      updateVacationBalance();
+    }
+  };
+}
+function openVacationModal(empId) {
+  editingVacationId = null;
+  document.getElementById('vacation-modal-title').textContent = 'Lisa puhkus';
+  document.getElementById('vacation-save-btn').textContent = 'Salvesta';
+
+  // Populate employee select
+  populateEmployeeSelect('vac-employee');
+
+  if (empId) document.getElementById('vac-employee').value = empId;
 
   document.getElementById('vac-type').value = 'PP';
   document.getElementById('vac-start').value = '';
@@ -848,17 +868,8 @@ function editVacation(vacId) {
   document.getElementById('vacation-save-btn').textContent = 'Salvesta muudatused';
 
   // Populate employee select
-  const sel = document.getElementById('vac-employee');
-  sel.innerHTML = '<option value="">Vali töötaja...</option>';
-  const sorted = [...employees].sort((a, b) => a.store.localeCompare(b.store) || a.name.localeCompare(b.name));
-  sorted.forEach(emp => {
-    const opt = document.createElement('option');
-    opt.value = emp.id;
-    opt.textContent = `${emp.name} (${emp.store})`;
-    sel.appendChild(opt);
-  });
-
-  sel.value = vac.employee_id;
+  populateEmployeeSelect('vac-employee');
+  document.getElementById('vac-employee').value = vac.employee_id;
   const typeNorm = (vac.type || 'PP').toUpperCase().replace('PÕHIPUHKUS', 'PP');
   document.getElementById('vac-type').value = typeNorm === 'LPP' ? 'LPP' : 'PP';
   document.getElementById('vac-start').value = vac.start_date;
@@ -994,8 +1005,11 @@ function confirmDeleteVacation(vacId) {
 // ============================================================
 // EMPLOYEE CRUD
 // ============================================================
-function openEmployeeModal() {
+let returnToVacationModal = false;
+
+function openEmployeeModal(empId, fromVacationModal) {
   editingEmployeeId = null;
+  returnToVacationModal = !!fromVacationModal;
   document.getElementById('employee-modal-title').textContent = 'Lisa töötaja';
   document.getElementById('employee-save-btn').textContent = 'Salvesta';
 
@@ -1006,6 +1020,7 @@ function openEmployeeModal() {
   document.getElementById('emp-balance-start').value = '0';
   document.getElementById('emp-balance-year').value = '28';
 
+  if (fromVacationModal) closeModal('modal-vacation');
   openModal('modal-employee');
 }
 
@@ -1078,27 +1093,38 @@ async function saveEmployee() {
   }
 
   closeModal('modal-employee');
+  const wasNew = !editingEmployeeId;
   showToast(editingEmployeeId ? 'Töötaja muudetud' : 'Töötaja lisatud', 'success');
   editingEmployeeId = null;
   renderCurrentView();
+
+  // If we came from vacation modal, return there with the new employee selected
+  if (returnToVacationModal && wasNew) {
+    returnToVacationModal = false;
+    const newEmpId = employees[employees.length - 1]?.id;
+    openVacationModal(newEmpId);
+  }
+  returnToVacationModal = false;
 }
 
 function confirmDeleteEmployee(empId) {
   const emp = employees.find(e => e.id === empId);
   if (!emp) return;
 
-  document.getElementById('confirm-title').textContent = 'Kustuta töötaja';
+  document.getElementById('confirm-title').textContent = 'Töötaja lahkub';
   document.getElementById('confirm-text').textContent =
-    `Kas soovid kustutada töötaja ${emp.name}? See kustutab ka kõik tema puhkused.`;
+    `Kas ${emp.name} lahkub? See eemaldab töötaja ja kõik tema puhkused.`;
 
   const btn = document.getElementById('confirm-action-btn');
-  btn.textContent = 'Kustuta';
+  btn.textContent = 'Eemalda';
+  btn.style.cssText = '';
   btn.onclick = async () => {
     employees = employees.filter(e => e.id !== empId);
     vacations = vacations.filter(v => v.employee_id !== empId);
     await saveAllData();
     closeModal('modal-confirm');
-    showToast('Töötaja kustutatud', 'success');
+    closeModal('modal-emp-detail');
+    showToast(`${emp.name} eemaldatud`, 'success');
     renderCurrentView();
   };
 
