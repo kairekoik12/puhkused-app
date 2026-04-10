@@ -35,6 +35,19 @@ let currentView = 'weekly';
 let showEndOfPeriodBalance = false; // toggle: tänane jääk vs perioodi lõpu jääk
 
 // ============================================================
+// MOBILE SIDEBAR
+// ============================================================
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ============================================================
 // INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', async () => {
@@ -247,7 +260,7 @@ function switchView(view) {
   document.getElementById(`view-${view}`).classList.add('active');
 
   // Close mobile sidebar
-  document.getElementById('sidebar').classList.remove('open');
+  closeSidebar();
 
   renderCurrentView();
 }
